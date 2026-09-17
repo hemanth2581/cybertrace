@@ -847,7 +847,67 @@ async function loadReport() {
     `;
 }
 
-// Auto-run status check on page load
+// ========================================================
+// MOBILE NAVIGATION & RESPONSIVE DRAWER CONTROLLER
+// ========================================================
+function initMobileNavigation() {
+    // 1. Ensure backdrop exists
+    let backdrop = document.getElementById("sidebar-backdrop");
+    if (!backdrop) {
+        backdrop = document.createElement("div");
+        backdrop.id = "sidebar-backdrop";
+        backdrop.className = "sidebar-backdrop";
+        document.body.appendChild(backdrop);
+    }
+
+    // 2. Ensure topbar toggle hamburger exists in topbar
+    const topbars = document.querySelectorAll(".topbar");
+    topbars.forEach(topbar => {
+        if (!topbar.querySelector(".sidebar-toggle-btn")) {
+            const toggleBtn = document.createElement("button");
+            toggleBtn.className = "sidebar-toggle-btn";
+            toggleBtn.setAttribute("aria-label", "Toggle Navigation Menu");
+            toggleBtn.innerHTML = "☰";
+            toggleBtn.onclick = toggleSidebar;
+            topbar.insertBefore(toggleBtn, topbar.firstChild);
+        }
+    });
+
+    // 3. Close sidebar when clicking backdrop or pressing Escape
+    backdrop.onclick = closeSidebar;
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeSidebar();
+    });
+
+    // 4. Auto-close mobile sidebar when clicking any navigation link
+    const navItems = document.querySelectorAll(".nav-item");
+    navItems.forEach(item => {
+        item.addEventListener("click", () => {
+            if (window.innerWidth <= 1024) closeSidebar();
+        });
+    });
+}
+
+function toggleSidebar() {
+    document.body.classList.toggle("sidebar-open");
+    const toggleBtns = document.querySelectorAll(".sidebar-toggle-btn");
+    const isOpen = document.body.classList.contains("sidebar-open");
+    toggleBtns.forEach(btn => {
+        btn.innerHTML = isOpen ? "✕" : "☰";
+    });
+}
+
+function closeSidebar() {
+    document.body.classList.remove("sidebar-open");
+    const toggleBtns = document.querySelectorAll(".sidebar-toggle-btn");
+    toggleBtns.forEach(btn => {
+        btn.innerHTML = "☰";
+    });
+}
+
+// Auto-run status check & mobile navigation initialization on page load
 document.addEventListener("DOMContentLoaded", () => {
+    initMobileNavigation();
     checkSystemStatus();
 });
+
