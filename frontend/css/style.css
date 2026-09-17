@@ -1000,6 +1000,35 @@ body.sidebar-open .sidebar-backdrop {
     margin-bottom: 0.75rem;
 }
 
+/* Mobile In-Content Action Buttons */
+.mobile-upload-btn,
+.mobile-page-action {
+    display: none;
+}
+
+.sidebar-close-btn {
+    display: none;
+    margin-left: auto;
+    background: rgba(14, 165, 233, 0.15);
+    border: 1px solid rgba(14, 165, 233, 0.35);
+    border-radius: 6px;
+    color: #38bdf8;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    cursor: pointer;
+    transition: var(--transition);
+    line-height: 1;
+}
+
+.sidebar-close-btn:hover {
+    background: rgba(220, 38, 38, 0.25);
+    border-color: #dc2626;
+    color: #fee2e2;
+}
+
 /* ========================================================
    COMPREHENSIVE RESPONSIVE DESIGN BREAKPOINTS
    ======================================================== */
@@ -1007,6 +1036,10 @@ body.sidebar-open .sidebar-backdrop {
 /* --- TABLETS & MEDIUM SCREENS (<= 1024px) --- */
 @media (max-width: 1024px) {
     .sidebar-toggle-btn {
+        display: inline-flex;
+    }
+
+    .sidebar-close-btn {
         display: inline-flex;
     }
 
@@ -1037,7 +1070,7 @@ body.sidebar-open .sidebar-backdrop {
     }
 
     .topbar {
-        padding: 0.75rem 1.25rem;
+        padding: 0.65rem 1rem;
     }
 
     .content-body {
@@ -1046,10 +1079,11 @@ body.sidebar-open .sidebar-backdrop {
 
     .kpi-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
     }
 }
 
-/* --- SMALL TABLETS & LARGE MOBILE (<= 768px) --- */
+/* --- SMARTPHONES & SMALL TABLETS (<= 768px) --- */
 @media (max-width: 768px) {
     body {
         background-attachment: scroll;
@@ -1060,43 +1094,179 @@ body.sidebar-open .sidebar-backdrop {
         -webkit-backdrop-filter: blur(12px);
     }
 
+    /* Compact 56px Single-Row Mobile Header */
     .topbar {
-        padding: 0.65rem 1rem;
-        gap: 0.5rem;
+        height: 56px;
+        min-height: 56px;
+        padding: 0 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .sidebar-toggle-btn {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+        font-size: 1.35rem;
+        margin: 0;
+    }
+
+    .topbar-title-group {
+        flex: 1;
+        min-width: 0;
+        text-align: center;
+        margin: 0 4px;
+    }
+
+    .topbar-title {
+        font-size: 1.05rem;
+        font-weight: 800;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        justify-content: center;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .topbar-subtitle {
+        display: none;
     }
 
     .topbar-actions {
-        width: 100%;
-        justify-content: flex-start;
-        padding-top: 0.4rem;
-        border-top: 1px solid rgba(14, 165, 233, 0.15);
-        margin-top: 0.25rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+        width: auto;
+        border: none;
+        margin: 0;
+        padding: 0;
     }
 
-    .content-body {
-        padding: 1rem;
+    /* Hide desktop-only elements from header */
+    .topbar-actions #topbar-system-status,
+    .topbar-actions .badge,
+    .topbar-actions a.btn,
+    .topbar-actions a.btn-primary,
+    .topbar-actions .topbar-upload-btn {
+        display: none !important;
     }
 
-    .context-box {
-        flex-direction: column;
+    /* Sleek 44px Mobile Refresh Button */
+    .topbar-actions button[onclick*="refreshCurrentView"],
+    .topbar-actions .btn-refresh {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0;
+        font-size: 1.3rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-sm);
+        margin: 0;
+    }
+
+    .topbar-actions button[onclick*="refreshCurrentView"] span.btn-text {
+        display: none !important;
+    }
+
+    /* Mobile In-Content Primary Action Button */
+    .mobile-upload-btn,
+    .mobile-page-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         gap: 0.5rem;
-        padding: 1rem;
+        width: 100%;
+        min-height: 46px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        margin-bottom: 1.25rem;
+        position: relative;
+        z-index: 1;
+        box-sizing: border-box;
+        border-radius: var(--radius-sm);
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
     }
 
-    .context-box-icon {
-        align-self: flex-start;
+    /* Responsive Content Container */
+    .content-body {
+        padding: 16px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Dashboard Intro Card */
+    .context-box {
+        padding: 16px 18px;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .context-box-title {
+        font-size: 0.92rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .context-box-text {
+        font-size: 0.88rem;
+        line-height: 1.5;
+    }
+
+    /* KPI Cards on Mobile: 1 Card Per Row */
+    .kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-bottom: 16px;
+        width: 100%;
     }
 
     .kpi-card {
-        padding: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 16px 18px;
+        margin-bottom: 0;
+        min-height: auto;
+        border-radius: 10px;
+    }
+
+    .kpi-header {
+        margin-bottom: 0.35rem;
+    }
+
+    .kpi-label {
+        font-size: 0.8rem;
+        font-weight: 700;
     }
 
     .kpi-value {
-        font-size: 1.8rem;
+        font-size: clamp(1.8rem, 6.5vw, 2.25rem);
+        font-weight: 800;
+        line-height: 1.15;
+        margin: 4px 0;
+        word-break: break-word;
+    }
+
+    .kpi-desc {
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
     }
 
     .card {
         padding: 1.15rem;
+        border-radius: 10px;
     }
 
     .card-header {
@@ -1113,9 +1283,9 @@ body.sidebar-open .sidebar-backdrop {
     }
 
     .btn-sm {
-        min-height: 38px;
-        font-size: 0.8rem;
-        padding: 0.4rem 0.75rem;
+        min-height: 40px;
+        font-size: 0.82rem;
+        padding: 0.45rem 0.85rem;
     }
 
     .form-control {
@@ -1164,19 +1334,6 @@ body.sidebar-open .sidebar-backdrop {
 
 /* --- MOBILE PHONES (<= 580px) --- */
 @media (max-width: 580px) {
-    .kpi-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-    }
-
-    .topbar-title {
-        font-size: 1rem;
-    }
-
-    .topbar-subtitle {
-        display: none;
-    }
-
     .event-inspector-panel {
         grid-template-columns: 1fr;
     }
@@ -1196,7 +1353,7 @@ body.sidebar-open .sidebar-backdrop {
     .chip {
         font-size: 0.75rem;
         padding: 0.4rem 0.7rem;
-        min-height: 32px;
+        min-height: 34px;
         display: inline-flex;
         align-items: center;
     }
@@ -1227,7 +1384,11 @@ body.sidebar-open .sidebar-backdrop {
 /* --- VERY SMALL SCREENS (<= 380px) --- */
 @media (max-width: 380px) {
     .content-body {
-        padding: 0.75rem 0.5rem;
+        padding: 12px 10px;
+    }
+
+    .context-box {
+        padding: 14px;
     }
 
     .card {
@@ -1235,13 +1396,7 @@ body.sidebar-open .sidebar-backdrop {
     }
 
     .topbar {
-        padding: 0.5rem 0.75rem;
-    }
-
-    .topbar-actions .btn {
-        font-size: 0.75rem;
-        padding: 0.35rem 0.5rem;
-        min-height: 36px;
+        padding: 0 8px;
     }
 
     .evidence-node {

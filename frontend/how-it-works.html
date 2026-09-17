@@ -85,18 +85,21 @@
             <!-- TOPBAR -->
             <header class="topbar">
                 <div class="topbar-title-group">
-                    <h1 class="topbar-title">💡 How CyberTrace Works (8-Step Architecture)</h1>
+                    <h1 class="topbar-title">💡 How It Works</h1>
                     <span class="topbar-subtitle">Interactive pipeline breakdown explaining the full data and forensic intelligence lifecycle</span>
                 </div>
 
                 <div class="topbar-actions">
-                    <a href="timeline.html" class="btn btn-primary btn-sm">⏱️ Open Time Machine</a>
-                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm">↻ Refresh</button>
+                    <a href="timeline.html" class="btn btn-primary btn-sm topbar-upload-btn">⏱️ Time Machine</a>
+                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm btn-refresh" title="Refresh Page">↻ <span class="btn-text">Refresh</span></button>
                 </div>
             </header>
 
             <!-- CONTENT BODY -->
             <main class="content-body">
+                <!-- MOBILE PRIMARY ACTION -->
+                <a href="timeline.html" class="btn btn-primary mobile-upload-btn">⏱️ Open Time Machine Replay</a>
+
                 <section class="context-box">
                     <div class="context-box-icon">💡</div>
                     <div>

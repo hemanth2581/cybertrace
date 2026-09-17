@@ -873,6 +873,19 @@ function initMobileNavigation() {
         }
     });
 
+    // 2b. Ensure close button exists in sidebar-header
+    const sidebarHeaders = document.querySelectorAll(".sidebar-header");
+    sidebarHeaders.forEach(header => {
+        if (!header.querySelector(".sidebar-close-btn")) {
+            const closeBtn = document.createElement("button");
+            closeBtn.className = "sidebar-close-btn";
+            closeBtn.setAttribute("aria-label", "Close Navigation Menu");
+            closeBtn.innerHTML = "✕";
+            closeBtn.onclick = closeSidebar;
+            header.appendChild(closeBtn);
+        }
+    });
+
     // 3. Close sidebar when clicking backdrop or pressing Escape
     backdrop.onclick = closeSidebar;
     document.addEventListener("keydown", (e) => {

@@ -85,7 +85,7 @@
             <!-- TOP NAVIGATION HEADER -->
             <header class="topbar">
                 <div class="topbar-title-group">
-                    <h1 class="topbar-title">🛡️ Security Command Center</h1>
+                    <h1 class="topbar-title">🛡️ CyberTrace</h1>
                     <span class="topbar-subtitle">Real-time security monitoring and incident intelligence</span>
                 </div>
 
@@ -94,13 +94,16 @@
                         <span class="status-dot"></span>
                         <span>SYSTEM ONLINE</span>
                     </span>
-                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm">↻ Refresh</button>
-                    <a href="upload.html" class="btn btn-primary btn-sm">📤 Upload Logs</a>
+                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm btn-refresh" title="Refresh Telemetry">↻ <span class="btn-text">Refresh</span></button>
+                    <a href="upload.html" class="btn btn-primary btn-sm topbar-upload-btn">📤 Upload Logs</a>
                 </div>
             </header>
 
             <!-- CONTENT BODY -->
             <main class="content-body">
+                <!-- MOBILE PRIMARY ACTION -->
+                <a href="upload.html" class="btn btn-primary mobile-upload-btn">📤 Ingest & Upload Logs</a>
+
                 <!-- BEGINNER CONTEXT CALLOUT -->
                 <section class="context-box">
                     <div class="context-box-icon">💡</div>

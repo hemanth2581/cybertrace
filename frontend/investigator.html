@@ -85,18 +85,21 @@
             <!-- TOPBAR -->
             <header class="topbar">
                 <div class="topbar-title-group">
-                    <h1 class="topbar-title">🤖 AI Forensic Investigator Console</h1>
+                    <h1 class="topbar-title">🤖 AI Investigator</h1>
                     <span class="topbar-subtitle">Natural language forensic queries grounded strictly in validated security log facts</span>
                 </div>
 
                 <div class="topbar-actions">
-                    <a href="report.html" class="btn btn-primary btn-sm">📄 View Report</a>
-                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm">↻ Refresh</button>
+                    <a href="report.html" class="btn btn-primary btn-sm topbar-upload-btn">📄 View Report</a>
+                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm btn-refresh" title="Refresh Console">↻ <span class="btn-text">Refresh</span></button>
                 </div>
             </header>
 
             <!-- CONTENT BODY -->
             <main class="content-body">
+                <!-- MOBILE PRIMARY ACTION -->
+                <a href="report.html" class="btn btn-primary mobile-upload-btn">📄 View Incident Report</a>
+
                 <section class="context-box">
                     <div class="context-box-icon">💡</div>
                     <div>

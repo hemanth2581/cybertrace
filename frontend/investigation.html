@@ -85,18 +85,21 @@
             <!-- TOPBAR -->
             <header class="topbar">
                 <div class="topbar-title-group">
-                    <h1 class="topbar-title">🔍 Active Incident Investigation</h1>
+                    <h1 class="topbar-title">🔍 Active Incidents</h1>
                     <span class="topbar-subtitle">Correlated threat cases linking isolated anomalies into multi-stage attack dossiers</span>
                 </div>
 
                 <div class="topbar-actions">
-                    <a href="timeline.html" class="btn btn-primary btn-sm">⏱️ Open Time Machine</a>
-                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm">↻ Refresh</button>
+                    <a href="timeline.html" class="btn btn-primary btn-sm topbar-upload-btn">⏱️ Open Time Machine</a>
+                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm btn-refresh" title="Refresh Incidents">↻ <span class="btn-text">Refresh</span></button>
                 </div>
             </header>
 
             <!-- CONTENT BODY -->
             <main class="content-body">
+                <!-- MOBILE PRIMARY ACTION -->
+                <a href="timeline.html" class="btn btn-primary mobile-upload-btn">⏱️ Open Time Machine Replay</a>
+
                 <section class="context-box">
                     <div class="context-box-icon">💡</div>
                     <div>

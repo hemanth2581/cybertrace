@@ -85,19 +85,22 @@
             <!-- TOPBAR -->
             <header class="topbar">
                 <div class="topbar-title-group">
-                    <h1 class="topbar-title">📜 Security Event Explorer</h1>
+                    <h1 class="topbar-title">📜 Event Explorer</h1>
                     <span class="topbar-subtitle">Search, filter, and audit full security event records</span>
                 </div>
 
                 <div class="topbar-actions">
                     <span class="badge badge-normal" id="events-count-badge">0 Records</span>
-                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm">↻ Refresh</button>
-                    <a href="upload.html" class="btn btn-primary btn-sm">📤 Ingest Logs</a>
+                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm btn-refresh" title="Refresh Records">↻ <span class="btn-text">Refresh</span></button>
+                    <a href="upload.html" class="btn btn-primary btn-sm topbar-upload-btn">📤 Ingest Logs</a>
                 </div>
             </header>
 
             <!-- CONTENT BODY -->
             <main class="content-body">
+                <!-- MOBILE PRIMARY ACTION -->
+                <a href="upload.html" class="btn btn-primary mobile-upload-btn">📤 Ingest & Upload Logs</a>
+
                 <section class="context-box">
                     <div class="context-box-icon">💡</div>
                     <div>

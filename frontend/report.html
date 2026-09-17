@@ -85,18 +85,21 @@
             <!-- TOPBAR -->
             <header class="topbar">
                 <div class="topbar-title-group">
-                    <h1 class="topbar-title">📄 Digital Forensics Incident Report</h1>
+                    <h1 class="topbar-title">📄 Incident Report</h1>
                     <span class="topbar-subtitle">Synthesized audit dossier and ReportLab PDF document compilation</span>
                 </div>
 
                 <div class="topbar-actions">
-                    <a href="/api/report/pdf" class="btn btn-primary btn-sm" download>↓ DOWNLOAD PDF REPORT</a>
-                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm">↻ Refresh</button>
+                    <a href="/api/report/pdf" class="btn btn-primary btn-sm topbar-upload-btn" download>↓ Download PDF</a>
+                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm btn-refresh" title="Refresh Report">↻ <span class="btn-text">Refresh</span></button>
                 </div>
             </header>
 
             <!-- CONTENT BODY -->
             <main class="content-body">
+                <!-- MOBILE PRIMARY ACTION -->
+                <a href="/api/report/pdf" class="btn btn-primary mobile-upload-btn" download>↓ Download Official PDF Report</a>
+
                 <section class="context-box">
                     <div class="context-box-icon">💡</div>
                     <div>
