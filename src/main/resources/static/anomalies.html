@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberTrace — Anomaly Detection & Risk Matrix</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-wrapper">
+  <div id="sidebar-container"></div>
+
+  <div class="main-content">
+    <div id="navbar-container"></div>
+
+    <main class="container-fluid p-4 p-lg-5 max-w-7xl">
+      
+      <!-- Empty State -->
+      <div id="anomalies-empty-state" class="d-none">
+        <div class="cyber-card text-center py-5">
+          <i class="bi bi-shield-exclamation text-slate-500 fs-1 mb-2"></i>
+          <h4 class="text-white fw-bold mb-2">No Telemetry Loaded</h4>
+          <p class="text-slate-400 small mb-4">Please upload a log file to run Java anomaly detection.</p>
+          <a href="upload.html" class="btn btn-primary btn-sm px-3 py-2">Go to Upload</a>
+        </div>
+      </div>
+
+      <!-- Anomalies Content -->
+      <div id="anomalies-content" class="d-none">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+          <div>
+            <h2 class="text-white fw-bold m-0">Anomaly Detection & Threat Scoring</h2>
+            <p class="text-slate-400 small m-0">Rule-based heuristic risk engine isolating unauthorized actions, suspicious files, and public network origins.</p>
+          </div>
+          <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 font-mono fw-bold" id="anomalies-count-badge">
+            0 Flagged Anomalies
+          </span>
+        </div>
+
+        <div id="no-threats-alert" class="alert alert-success d-none d-flex align-items-center gap-2 mb-4">
+          <i class="bi bi-shield-check fs-5"></i>
+          <div>All evaluated events match clean baseline criteria. Zero security anomalies detected.</div>
+        </div>
+
+        <!-- Anomalies Table -->
+        <div class="cyber-card p-0 overflow-hidden mb-4">
+          <div class="table-responsive">
+            <table class="cyber-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>User</th>
+                  <th>Source IP</th>
+                  <th>Suspicious Action</th>
+                  <th>Risk Score</th>
+                  <th>Severity</th>
+                  <th>Flag Reason</th>
+                </tr>
+              </thead>
+              <tbody id="anomalies-table-body">
+                <!-- Injected via anomalies.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Heuristic Penalty Matrix Rules -->
+        <div class="cyber-card">
+          <h6 class="text-white fw-bold mb-3 d-flex align-items-center gap-2">
+            <i class="bi bi-cpu-fill text-cyan"></i> Java Heuristic Risk Scoring Rules
+          </h6>
+          <div class="row g-3 text-xs">
+            <div class="col-12 col-sm-6 col-md-4">
+              <div class="p-3 rounded bg-dark border border-slate-800 h-100">
+                <div class="d-flex justify-content-between text-danger font-mono fw-bold mb-1">
+                  <span>FAILED_LOGIN</span>
+                  <span>+20 pts</span>
+                </div>
+                <p class="text-slate-400 m-0">Brute-force password guessing & credential stuffing attempt</p>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4">
+              <div class="p-3 rounded bg-dark border border-slate-800 h-100">
+                <div class="d-flex justify-content-between text-danger font-mono fw-bold mb-1">
+                  <span>External Public IP</span>
+                  <span>+20 pts</span>
+                </div>
+                <p class="text-slate-400 m-0">Non-RFC1918 public IP outside 10.x, 192.168.x, 172.16.x</p>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4">
+              <div class="p-3 rounded bg-dark border border-slate-800 h-100">
+                <div class="d-flex justify-content-between text-danger font-mono fw-bold mb-1">
+                  <span>Sensitive File Access</span>
+                  <span>+20 pts</span>
+                </div>
+                <p class="text-slate-400 m-0">Accessing passwords.txt, credentials.txt, database.sql, etc.</p>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4">
+              <div class="p-3 rounded bg-dark border border-slate-800 h-100">
+                <div class="d-flex justify-content-between text-warning font-mono fw-bold mb-1">
+                  <span>Large Outbound Transfer</span>
+                  <span>+15 pts</span>
+                </div>
+                <p class="text-slate-400 m-0">Exfiltration transfer volume exceeding 500 MB threshold</p>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4">
+              <div class="p-3 rounded bg-dark border border-slate-800 h-100">
+                <div class="d-flex justify-content-between text-warning font-mono fw-bold mb-1">
+                  <span>Privilege Escalation</span>
+                  <span>+10 pts</span>
+                </div>
+                <p class="text-slate-400 m-0">Execution of root/administrator escalation commands</p>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4">
+              <div class="p-3 rounded bg-dark border border-slate-800 h-100">
+                <div class="d-flex justify-content-between text-cyan font-mono fw-bold mb-1">
+                  <span>Compound Multi-Vector</span>
+                  <span>+7 pts</span>
+                </div>
+                <p class="text-slate-400 m-0">Compound correlation penalty applied when 3+ triggers occur</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/anomalies.js"></script>
+</body>
+</html>

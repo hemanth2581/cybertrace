@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberTrace — Log Ingestion & Demo Scenarios</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-wrapper">
+  <div id="sidebar-container"></div>
+
+  <div class="main-content">
+    <div id="navbar-container"></div>
+
+    <main class="container-fluid p-4 p-lg-5" style="max-width: 960px;">
+      
+      <div class="mb-4">
+        <h2 class="text-white fw-bold m-0">Log Ingestion Pipeline</h2>
+        <p class="text-slate-400 small m-0">Upload raw authentication and host access audit logs (CSV) for Java heuristic risk correlation.</p>
+      </div>
+
+      <!-- Alerts -->
+      <div id="upload-error-alert" class="alert alert-danger d-none d-flex align-items-center gap-2 mb-4" role="alert">
+        <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+        <div id="upload-error-msg"></div>
+      </div>
+
+      <div id="upload-success-alert" class="alert alert-success d-none d-flex align-items-center gap-2 mb-4" role="alert">
+        <i class="bi bi-check-circle-fill fs-5"></i>
+        <div id="upload-success-msg"></div>
+      </div>
+
+      <!-- Upload Dropzone -->
+      <div class="upload-dropzone mb-4" id="upload-dropzone">
+        <input type="file" id="csv-file-input" accept=".csv,text/csv" class="d-none">
+        
+        <div class="mb-3" id="upload-icon">
+          <i class="bi bi-cloud-arrow-up text-cyan" style="font-size: 3rem;"></i>
+        </div>
+
+        <h4 class="text-white fw-bold mb-2" id="upload-title">Upload Security Log</h4>
+        <p class="text-slate-400 small mb-4" style="max-width: 450px; margin: 0 auto;">
+          Drag and drop your RFC-compliant CSV audit file here, or click to choose from your device.
+        </p>
+
+        <button type="button" class="btn btn-primary px-4 py-2" id="choose-file-btn" style="border-radius: 12px; font-weight: 600;">
+          <i class="bi bi-file-earmark-spreadsheet me-1"></i> Choose CSV File
+        </button>
+
+        <div id="upload-status" class="mt-3 text-cyan small d-none">
+          <span class="spinner-border spinner-border-sm me-1"></span> Processing file in Spring Boot backend...
+        </div>
+
+        <p class="text-slate-500 text-xs mt-3 mb-0">
+          Required headers: timestamp, user, device, ip, action | Optional: file, data_size
+        </p>
+      </div>
+
+      <!-- Pre-built Demo Datasets -->
+      <div class="cyber-card mb-4">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <i class="bi bi-lightning-charge-fill text-cyan"></i>
+          <h6 class="text-white fw-bold m-0">Pre-Built Codeathon Demo Scenarios</h6>
+        </div>
+        <p class="text-slate-400 small mb-3">
+          Select any verified multi-vector attack scenario below to trigger the Java detection engine:
+        </p>
+
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <button id="demo-compromise-btn" class="btn text-start p-3 w-100 h-100 cyber-card border-danger-subtle d-flex flex-column justify-content-between" style="background: rgba(239, 68, 68, 0.05);">
+              <div>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <span class="badge bg-danger text-white font-mono px-2 py-1">CRITICAL</span>
+                  <i class="bi bi-shield-slash text-danger"></i>
+                </div>
+                <strong class="text-white d-block mb-1">Account Compromise</strong>
+                <p class="text-slate-400 small m-0" style="font-size: 0.78rem;">
+                  Rahul • Multiple failed logins, external IP, passwords.txt access, large exfiltration, privilege escalation.
+                </p>
+              </div>
+              <div class="text-cyan small fw-semibold mt-3">Load Compromise Dataset →</div>
+            </button>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <button id="demo-exfiltration-btn" class="btn text-start p-3 w-100 h-100 cyber-card border-warning-subtle d-flex flex-column justify-content-between" style="background: rgba(245, 158, 11, 0.05);">
+              <div>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <span class="badge bg-warning text-dark font-mono px-2 py-1">HIGH</span>
+                  <i class="bi bi-database-dash text-warning"></i>
+                </div>
+                <strong class="text-white d-block mb-1">Data Exfiltration</strong>
+                <p class="text-slate-400 small m-0" style="font-size: 0.78rem;">
+                  Alex • Database SQL dump access, multi-GB outbound data transfer to external public IP.
+                </p>
+              </div>
+              <div class="text-cyan small fw-semibold mt-3">Load Exfiltration Dataset →</div>
+            </button>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <button id="demo-normal-btn" class="btn text-start p-3 w-100 h-100 cyber-card border-success-subtle d-flex flex-column justify-content-between" style="background: rgba(16, 185, 129, 0.05);">
+              <div>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <span class="badge bg-success text-white font-mono px-2 py-1">NORMAL</span>
+                  <i class="bi bi-shield-check text-success"></i>
+                </div>
+                <strong class="text-white d-block mb-1">Normal Activity</strong>
+                <p class="text-slate-400 small m-0" style="font-size: 0.78rem;">
+                  Sarah • Routine enterprise operations: standard internal login, report read, routine logout.
+                </p>
+              </div>
+              <div class="text-cyan small fw-semibold mt-3">Load Normal Dataset →</div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSV Schema Guide -->
+      <div class="cyber-card">
+        <h6 class="text-white fw-bold mb-3 d-flex align-items-center gap-2">
+          <i class="bi bi-table text-cyan"></i> Supported CSV Schema & Fields
+        </h6>
+        <div class="table-responsive">
+          <table class="cyber-table">
+            <thead>
+              <tr>
+                <th>Column</th>
+                <th>Required</th>
+                <th>Example</th>
+                <th>Forensic Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="font-mono text-cyan fw-bold">timestamp</td>
+                <td><span class="badge bg-success">YES</span></td>
+                <td class="font-mono text-slate-300">2026-09-17 10:01:00</td>
+                <td class="text-slate-400 small">Sequential timeline reconstruction</td>
+              </tr>
+              <tr>
+                <td class="font-mono text-cyan fw-bold">user</td>
+                <td><span class="badge bg-success">YES</span></td>
+                <td class="font-mono text-slate-300">Rahul</td>
+                <td class="text-slate-400 small">Target identity & account correlation</td>
+              </tr>
+              <tr>
+                <td class="font-mono text-cyan fw-bold">device</td>
+                <td><span class="badge bg-success">YES</span></td>
+                <td class="font-mono text-slate-300">DEV01</td>
+                <td class="text-slate-400 small">Target workstation or host server</td>
+              </tr>
+              <tr>
+                <td class="font-mono text-cyan fw-bold">ip</td>
+                <td><span class="badge bg-success">YES</span></td>
+                <td class="font-mono text-slate-300">185.23.45.10</td>
+                <td class="text-slate-400 small">RFC1918 private vs external origin detection</td>
+              </tr>
+              <tr>
+                <td class="font-mono text-cyan fw-bold">action</td>
+                <td><span class="badge bg-success">YES</span></td>
+                <td class="font-mono text-slate-300">FAILED_LOGIN</td>
+                <td class="text-slate-400 small">Heuristic penalty matrix evaluation</td>
+              </tr>
+              <tr>
+                <td class="font-mono text-cyan fw-bold">file</td>
+                <td><span class="badge bg-secondary">OPTIONAL</span></td>
+                <td class="font-mono text-slate-300">passwords.txt</td>
+                <td class="text-slate-400 small">Sensitive credential & database asset tagging</td>
+              </tr>
+              <tr>
+                <td class="font-mono text-cyan fw-bold">data_size</td>
+                <td><span class="badge bg-secondary">OPTIONAL</span></td>
+                <td class="font-mono text-slate-300">850</td>
+                <td class="text-slate-400 small">Outbound exfiltration threshold (&ge; 500 MB)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/upload.js"></script>
+</body>
+</html>

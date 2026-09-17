@@ -1,115 +1,101 @@
-# CYBERTRACE - BEGINNER-FRIENDLY FULL-STACK GUIDE
+# CyberTrace — Beginner's Technical Guide
 
-Welcome to full-stack development with Python! This guide explains every concept used in CyberTrace using simple, everyday language and concrete project examples.
-
----
-
-## 1. Web Technologies (Frontend)
-
-### HTML (HyperText Markup Language)
-- **What is it?** HTML provides the structure and skeleton of web pages (headings, buttons, inputs, tables).
-- **CyberTrace Example:** `upload.html` uses an `<input type="file">` to let you pick a CSV file and `<button>` to start analysis.
-
-### CSS (Cascading Style Sheets)
-- **What is it?** CSS styles the HTML, making it look beautiful with dark colors, glowing borders, and rounded cards.
-- **CyberTrace Example:** `style.css` uses deep slate background colors (`#070b14`) and cyan neon highlights (`#00f2fe`) to create a professional cybersecurity dashboard look.
-
-### JavaScript (JS)
-- **What is it?** JavaScript runs inside your browser to make web pages interactive without needing to refresh.
-- **CyberTrace Example:** In `timeline.html`, when you click **Play** or move the **Slider**, JavaScript updates the active event card in real time.
+Welcome to the **CyberTrace** beginner's guide! This document explains the core technical concepts used in CyberTrace in simple, clear language so you can confidently explain the project to codeathon judges.
 
 ---
 
-## 2. Backend & Server
+## 1. Core Technology Concepts
 
-### Python
-- **What is it?** Python is a clean, readable programming language that runs on your computer or server.
-- **CyberTrace Example:** Python handles reading files, calculating risk math, generating PDF files, and connecting to the database.
+### What is Java?
+**Java** is a robust, object-oriented, typed programming language. It is widely used in enterprise cybersecurity systems for its performance, type safety, and reliability.
 
-### Python Built-in HTTP Server (`http.server`)
-- **What is it?** Python comes with its own built-in web server. You don't need heavy frameworks like Django or Flask to receive requests or serve HTML.
-- **CyberTrace Example:** `server.py` listens on port `8000`. When you open `http://127.0.0.1:8000`, Python serves `index.html` and routes API requests.
+### What is Spring Boot?
+**Spring Boot** is a modern Java framework that makes it easy to build production-grade web applications and REST APIs. It provides an embedded web server (Tomcat), automatic configuration, and dependency injection so we can focus on cybersecurity logic.
+
+### What is a REST API?
+A **REST API** (Representational State Transfer Application Programming Interface) allows the frontend (HTML/JavaScript in your browser) to communicate with the backend (Java Spring Boot server) using standard HTTP requests like `POST` and `GET`.
+- The frontend sends raw data (e.g. CSV file or text).
+- Java processes the data and responds with structured **JSON** (JavaScript Object Notation).
+
+### What is a Controller?
+In Spring Boot, a **Controller** (`@RestController`) defines the web endpoints (like `/api/events/analyze`). It receives incoming HTTP requests from the browser and passes them to Services.
+
+### What is a Service?
+A **Service** (`@Service`) contains the core business logic. In CyberTrace, services handle:
+- Parsing CSV files (`CsvProcessingService`)
+- Calculating risk scores (`RiskAnalysisService`)
+- Filtering suspicious anomalies (`AnomalyDetectionService`)
+- Correlating incidents (`IncidentService`)
+- Building attack timelines (`TimelineService`)
+- Extracting evidence chains (`EvidenceService`)
+- Answering forensic questions (`InvestigatorService`)
+- Generating PDF reports (`PdfReportService`)
+
+### What is a Model?
+A **Model** is a simple Java class (Plain Old Java Object / POJO) that represents structured data, such as a `SecurityEvent`, `Incident`, `Anomaly`, `TimelineEvent`, or `Evidence`.
+
+### What is localStorage?
+**localStorage** is a built-in browser database that saves key-value pairs directly inside the user's web browser.
+- **Why we use it:** It eliminates the need for complex external database setups (like PostgreSQL, MySQL, or Supabase) during a codeathon while keeping the investigation data persistent even if you refresh the browser page.
 
 ---
 
-## 3. Communication & APIs
+## 2. CyberTrace Forensic Pipeline Flow
 
-### API (Application Programming Interface)
-- **What is it?** A way for two different programs (the frontend in your browser and the backend in Python) to talk to each other.
-
-### HTTP Request & HTTP Response
-- **Request:** The browser sends a message to Python: *"Hey Python, give me the latest timeline steps!"* (`GET /api/timeline`).
-- **Response:** Python sends back the data: *"Here are the 8 steps!"* (JSON data with status 200 OK).
-
-### JavaScript `fetch()`
-- **What is it?** The standard JavaScript function used to send HTTP requests to Python.
-- **Example:**
-```javascript
-const response = await fetch("/api/events");
-const data = await response.json();
-console.log(data.events);
+```
+   Raw CSV Logs (User Upload or Demo)
+                 │
+                 ▼
+     [POST /api/events/analyze]
+                 │
+                 ▼
+       Spring Boot Java Backend
+   ┌────────────────────────────────┐
+   │ 1. CsvProcessingService        │ (Validates columns & parses records)
+   │ 2. RiskAnalysisService         │ (Calculates 0-100 risk score)
+   │ 3. AnomalyDetectionService     │ (Filters suspicious events)
+   │ 4. IncidentService             │ (Correlates multi-stage INC-001)
+   │ 5. TimelineService             │ (Flags FIRST SUSPICIOUS EVENT)
+   │ 6. EvidenceService             │ (Builds User->Device->IP->File chain)
+   └────────────────────────────────┘
+                 │
+                 ▼
+            JSON Response
+                 │
+                 ▼
+      Browser JavaScript Storage
+    (Saved into localStorage keys)
+                 │
+                 ▼
+      Interactive SOC Dashboard
 ```
 
-### JSON (JavaScript Object Notation)
-- **What is it?** A lightweight text format for exchanging structured data between Python and JavaScript.
-- **Example:**
-```json
-{
-  "timestamp": "10:01",
-  "user": "Rahul",
-  "risk_score": 92,
-  "severity": "CRITICAL"
-}
-```
+---
+
+## 3. How Risk Scoring Works
+
+Risk scores (0 to 100) are computed deterministically using standard cybersecurity heuristic rules:
+
+| Condition | Risk Penalty | Forensic Rationale |
+| :--- | :---: | :--- |
+| **Failed Login / Auth Failure** | `+20 pts` | Indicates password guessing / brute-force attempt |
+| **External Public IP** | `+20 pts` | Infiltration origin outside internal RFC1918 subnets |
+| **Sensitive File Access** | `+20 pts` | Accessing `passwords.txt`, `credentials.txt`, `database.sql` |
+| **Large Data Outbound** | `+15 pts` | Exfiltration transfer volume &ge; 500 MB |
+| **Privilege Escalation** | `+10 pts` | Sudo / administrator elevation commands |
+| **Compound Penalty** | `+7 pts` | Applied when 3 or more distinct suspicious triggers co-occur |
+
+### Threat Tiers:
+- `0 - 20`: **NORMAL**
+- `21 - 40`: **LOW**
+- `41 - 60`: **MEDIUM**
+- `61 - 80`: **HIGH**
+- `81 - 100`: **CRITICAL**
 
 ---
 
-## 4. Databases
+## 4. Key Takeaways for Judges
 
-### PostgreSQL
-- **What is it?** A powerful, enterprise-grade relational database management system that stores information in structured tables with rows and columns.
-
-### Supabase
-- **What is it?** A modern cloud database service that gives you a hosted PostgreSQL database with simple Python client libraries.
-
-### Database Concepts:
-- **Table:** A collection of related data (like an Excel sheet). CyberTrace has `security_events`, `incidents`, `evidence`, and `investigation_reports`.
-- **Row / Record:** A single entry in a table (e.g. one event at 10:01 for user Rahul).
-- **Column / Field:** A specific attribute of each record (e.g. `timestamp`, `ip`, `risk_score`).
-
----
-
-## 5. AI & Data Analysis
-
-### CSV (Comma-Separated Values)
-- **What is it?** A plain text file where data rows are separated by newlines and column values are separated by commas.
-
-### Pandas & DataFrames
-- **What is Pandas?** A Python library used for working with tabular data.
-- **What is a DataFrame?** A 2D table held in Python memory.
-- **Why clean data?** Real security logs might have empty spaces, missing usernames, or lowercase/uppercase inconsistencies. Pandas cleans them so math calculations never fail.
-
-### Rule-Based Anomaly Detection
-- **What is it?** Checking specific security rules:
-  - Is the IP address external? (+20 points)
-  - Did logins fail repeatedly? (+20 points)
-  - Was `passwords.txt` accessed? (+20 points)
-  - Was large data uploaded? (+15 points)
-  - Were permissions changed? (+10 points)
-
-### Risk Score vs. Anomaly Flag:
-- **Risk Score:** A number from `0` to `100` showing threat magnitude.
-- **Anomaly Flag:** A `True` or `False` boolean indicating if this event warrants investigation (Score > 30).
-
----
-
-## 6. Digital Forensics Concepts
-
-### Event Correlation
-- Connecting multiple individual logs that involve the same user, device, and network address into a single coordinated incident.
-
-### Time Machine Reconstruction
-- Ordering all security events by timestamp so an analyst can watch what happened step by step.
-
-### Legal Chain of Custody & Evidence
-- Showing how evidence is linked (`Rahul` -> `DEV01` -> `185.23.45.10` -> `passwords.txt` -> `850 KB Data Transfer`).
+1. **Zero Database Overhead:** Persistent across page refreshes via client-side `localStorage`.
+2. **Deterministic & Verifiable:** No AI hallucinations; every investigator answer and risk score is strictly grounded in evidence.
+3. **End-to-End Java Forensics:** Complete multi-stage attack reconstruction from raw CSV ingestion to PDF case report generation.

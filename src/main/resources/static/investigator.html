@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberTrace — AI Digital Forensics Investigator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-wrapper">
+  <div id="sidebar-container"></div>
+
+  <div class="main-content">
+    <div id="navbar-container"></div>
+
+    <main class="container-fluid p-4 p-lg-5 max-w-7xl">
+      
+      <!-- Empty State -->
+      <div id="investigator-empty-state" class="d-none">
+        <div class="cyber-card text-center py-5">
+          <i class="bi bi-robot text-slate-500 fs-1 mb-2"></i>
+          <h4 class="text-white fw-bold mb-2">Investigator Offline</h4>
+          <p class="text-slate-400 small mb-4">Please upload security logs to provide ground-truth evidence for the reasoning engine.</p>
+          <a href="upload.html" class="btn btn-primary btn-sm px-3 py-2">Go to Upload</a>
+        </div>
+      </div>
+
+      <!-- Investigator Content -->
+      <div id="investigator-content" class="d-none">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+          <div>
+            <h2 class="text-white fw-bold m-0">AI Digital Forensics Investigator</h2>
+            <p class="text-slate-400 small m-0">Deterministic, evidence-grounded Java reasoning engine answering natural language inquiries without hallucinations.</p>
+          </div>
+          <button id="clear-chat-btn" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1.5" title="Clear Q&A History">
+            <i class="bi bi-trash3"></i> Clear History
+          </button>
+        </div>
+
+        <!-- Quick Question Suggestions -->
+        <div class="cyber-card mb-4 p-3">
+          <span class="text-slate-400 text-xs text-uppercase fw-bold d-block mb-2">
+            <i class="bi bi-lightbulb text-cyan me-1"></i> Quick Forensic Inquiries:
+          </span>
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-dark btn-sm text-slate-300 border-secondary suggestion-pill" data-question="What happened?">
+              What happened?
+            </button>
+            <button class="btn btn-dark btn-sm text-slate-300 border-secondary suggestion-pill" data-question="Who was involved?">
+              Who was involved?
+            </button>
+            <button class="btn btn-dark btn-sm text-slate-300 border-secondary suggestion-pill" data-question="What was the first suspicious event?">
+              What was the first suspicious event?
+            </button>
+            <button class="btn btn-dark btn-sm text-slate-300 border-secondary suggestion-pill" data-question="Which IP was involved?">
+              Which IP was involved?
+            </button>
+            <button class="btn btn-dark btn-sm text-slate-300 border-secondary suggestion-pill" data-question="Which file was accessed?">
+              Which file was accessed?
+            </button>
+            <button class="btn btn-dark btn-sm text-slate-300 border-secondary suggestion-pill" data-question="How much data was transferred?">
+              How much data was transferred?
+            </button>
+            <button class="btn btn-dark btn-sm text-slate-300 border-secondary suggestion-pill" data-question="Why was this suspicious?">
+              Why was this suspicious?
+            </button>
+            <button class="btn btn-dark btn-sm text-slate-300 border-secondary suggestion-pill" data-question="How many suspicious events were detected?">
+              How many suspicious events?
+            </button>
+            <button class="btn btn-dark btn-sm text-slate-300 border-secondary suggestion-pill" data-question="What is the threat level?">
+              What is the threat level?
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="cyber-card p-0 d-flex flex-column mb-4" style="height: 480px;">
+          <!-- Messages Scrollable View -->
+          <div class="flex-grow-1 p-3 overflow-y-auto" id="chat-messages-container" style="max-height: 400px;">
+            <!-- Injected via investigator.js -->
+          </div>
+
+          <!-- Input Bar -->
+          <div class="p-3 border-top border-slate-800 bg-dark rounded-bottom">
+            <form id="chat-form" class="d-flex gap-2">
+              <input type="text" id="chat-input" class="form-control bg-dark text-white border-secondary" placeholder="Ask investigation question..." required autocomplete="off">
+              <button type="submit" id="chat-send-btn" class="btn btn-primary d-flex align-items-center gap-1 px-4" style="font-weight: 600;">
+                <span>Send</span>
+                <i class="bi bi-send-fill"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/investigator.js"></script>
+</body>
+</html>

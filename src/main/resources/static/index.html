@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberTrace — Security Command Center</title>
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-wrapper">
+  <!-- Desktop Sidebar Navigation -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main Viewport -->
+  <div class="main-content">
+    <!-- Top Header -->
+    <div id="navbar-container"></div>
+
+    <!-- Page Body -->
+    <main class="container-fluid p-4 p-lg-5 max-w-7xl">
+      
+      <!-- EMPTY STATE (Visible when localStorage has 0 events) -->
+      <div id="empty-state" class="d-none">
+        <div class="cyber-card text-center py-5 my-4">
+          <div class="brand-icon mx-auto mb-3" style="width: 54px; height: 54px;">
+            <i class="bi bi-shield-lock-fill text-cyan fs-3"></i>
+          </div>
+          <h2 class="text-white fw-bold mb-2">Welcome to CyberTrace</h2>
+          <p class="text-slate-400 max-w-md mx-auto mb-4" style="max-width: 500px;">
+            No security telemetry is currently loaded. Upload a host CSV security audit log or load a pre-built attack scenario to start your investigation.
+          </p>
+          <div class="d-flex flex-wrap gap-3 justify-content-center">
+            <a href="upload.html" class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2" style="border-radius: 12px; font-weight: 600;">
+              <i class="bi bi-cloud-upload"></i> Upload Security Logs
+            </a>
+            <button id="empty-load-demo-btn" class="btn btn-outline-info px-4 py-2 d-flex align-items-center gap-2" style="border-radius: 12px; font-weight: 600;">
+              <i class="bi bi-shield-exclamation"></i> Load Demo Scenario
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- POPULATED DASHBOARD VIEW -->
+      <div id="dashboard-content" class="d-none">
+        <!-- Title & Action Bar -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+          <div>
+            <h2 class="text-white fw-bold m-0">Security Command Center</h2>
+            <p class="text-slate-400 small m-0">Real-time digital forensics telemetry, anomaly correlation, and incident metrics.</p>
+          </div>
+          <a href="upload.html" class="btn btn-primary btn-sm d-flex align-items-center gap-2 px-3 py-2" style="border-radius: 10px; font-weight: 600;">
+            <i class="bi bi-cloud-arrow-up-fill"></i>
+            <span>+ Upload Logs</span>
+          </a>
+        </div>
+
+        <!-- 4 Responsive KPI Cards -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="cyber-card kpi-card">
+              <div>
+                <div class="kpi-title">Total Events</div>
+                <div class="kpi-value text-cyan" id="kpi-total-events">0</div>
+                <div class="kpi-sub">Parsed audit logs</div>
+              </div>
+              <div class="kpi-icon-box" style="background: rgba(56, 189, 248, 0.1); color: var(--cyber-cyan);">
+                <i class="bi bi-activity"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="cyber-card kpi-card">
+              <div>
+                <div class="kpi-title">Suspicious Events</div>
+                <div class="kpi-value text-warning" id="kpi-suspicious-events">0</div>
+                <div class="kpi-sub" id="kpi-suspicious-pct">0% anomaly rate</div>
+              </div>
+              <div class="kpi-icon-box" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                <i class="bi bi-exclamation-triangle"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="cyber-card kpi-card">
+              <div>
+                <div class="kpi-title">Critical Threats</div>
+                <div class="kpi-value text-danger" id="kpi-critical-threats">0</div>
+                <div class="kpi-sub" id="kpi-critical-sub">No critical threats</div>
+              </div>
+              <div class="kpi-icon-box" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                <i class="bi bi-radioactive"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="cyber-card kpi-card">
+              <div>
+                <div class="kpi-title">Overall Threat Score</div>
+                <div class="kpi-value text-info" id="kpi-overall-risk">0/100</div>
+                <div class="kpi-sub">Heuristic threat index</div>
+              </div>
+              <div class="kpi-icon-box" style="background: rgba(2, 132, 199, 0.1); color: var(--cyber-primary);">
+                <i class="bi bi-shield-shaded"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Incident Dossier -->
+        <div class="mb-4">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h5 class="text-white fw-bold m-0 d-flex align-items-center gap-2">
+              <i class="bi bi-shield-slash-fill text-danger"></i> Primary Correlated Incident
+            </h5>
+            <a href="investigation.html" class="text-cyan small fw-semibold text-decoration-none d-flex align-items-center gap-1">
+              Full Dossier <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+          <div id="active-incident-container"></div>
+        </div>
+
+        <!-- Threat Severity Distribution Progress Bar -->
+        <div class="cyber-card mb-4">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <div>
+              <h6 class="text-white fw-bold m-0">Event Severity Breakdown</h6>
+              <p class="text-slate-400 small m-0">Evaluated telemetry distribution across threat levels</p>
+            </div>
+          </div>
+
+          <div class="progress mb-3" style="height: 12px; background-color: #1e293b; border-radius: 9999px;" id="severity-progress-bar">
+            <!-- Progress segments injected dynamically -->
+          </div>
+
+          <div class="d-flex flex-wrap gap-3 small">
+            <span class="d-flex align-items-center gap-1.5"><span class="badge-dot" style="width: 8px; height: 8px; background: var(--cyber-normal); border-radius: 2px;"></span> <span class="text-slate-300" id="count-normal">Normal</span></span>
+            <span class="d-flex align-items-center gap-1.5"><span class="badge-dot" style="width: 8px; height: 8px; background: var(--cyber-low); border-radius: 2px;"></span> <span class="text-slate-300" id="count-low">Low</span></span>
+            <span class="d-flex align-items-center gap-1.5"><span class="badge-dot" style="width: 8px; height: 8px; background: var(--cyber-medium); border-radius: 2px;"></span> <span class="text-slate-300" id="count-medium">Medium</span></span>
+            <span class="d-flex align-items-center gap-1.5"><span class="badge-dot" style="width: 8px; height: 8px; background: var(--cyber-high); border-radius: 2px;"></span> <span class="text-slate-300" id="count-high">High</span></span>
+            <span class="d-flex align-items-center gap-1.5"><span class="badge-dot" style="width: 8px; height: 8px; background: var(--cyber-critical); border-radius: 2px;"></span> <span class="text-slate-300" id="count-critical">Critical</span></span>
+          </div>
+        </div>
+
+        <!-- Forensic Modules Quick Navigation -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-md-4">
+            <a href="timeline.html" class="cyber-card d-flex align-items-center gap-3 text-decoration-none text-white h-100">
+              <div class="brand-icon" style="width: 44px; height: 44px;">
+                <i class="bi bi-clock-history fs-5"></i>
+              </div>
+              <div>
+                <strong class="d-block mb-0.5">Forensic Time Machine</strong>
+                <span class="text-slate-400 small">Chronological attack sequence playback</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <a href="evidence.html" class="cyber-card d-flex align-items-center gap-3 text-decoration-none text-white h-100">
+              <div class="brand-icon" style="width: 44px; height: 44px;">
+                <i class="bi bi-diagram-3 fs-5"></i>
+              </div>
+              <div>
+                <strong class="d-block mb-0.5">Evidence Graph</strong>
+                <span class="text-slate-400 small">User-Device-IP-File entity chain</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <a href="investigator.html" class="cyber-card d-flex align-items-center gap-3 text-decoration-none text-white h-100">
+              <div class="brand-icon" style="width: 44px; height: 44px;">
+                <i class="bi bi-robot fs-5"></i>
+              </div>
+              <div>
+                <strong class="d-block mb-0.5">AI Investigator</strong>
+                <span class="text-slate-400 small">Evidence-grounded automated Q&A</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Recent Flagged Anomalies Preview -->
+        <div class="cyber-card">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h6 class="text-white fw-bold m-0 d-flex align-items-center gap-2">
+              <i class="bi bi-shield-exclamation text-warning"></i> Recent Flagged Anomalies
+            </h6>
+            <a href="anomalies.html" class="text-cyan small fw-semibold text-decoration-none d-flex align-items-center gap-1">
+              View All <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+
+          <div class="table-responsive">
+            <table class="cyber-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>User</th>
+                  <th>IP Address</th>
+                  <th>Action</th>
+                  <th>Risk</th>
+                  <th>Severity</th>
+                  <th>Flag Reason</th>
+                </tr>
+              </thead>
+              <tbody id="recent-anomalies-table-body">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
