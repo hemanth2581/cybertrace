@@ -80,14 +80,14 @@ function loadInvestigationData() {
         </div>
 
         <div class="mb-4">
-          <h6 class="text-white fw-bold d-flex align-items-center gap-2 mb-2">
+          <h6 class="text-white fw-bold d-flex align-items-center gap-2 mb-3">
             <i class="bi bi-shield-check text-cyan"></i> Recommended SOC Containment Playbook
           </h6>
-          <div class="list-group list-group-flush bg-transparent">
+          <div>
             ${(inc.recommendations || []).map(rec => `
-              <div class="list-group-item bg-transparent text-slate-300 border-slate-800 py-2 px-0 d-flex align-items-start gap-2 small">
-                <i class="bi bi-check2-circle text-cyan mt-0.5"></i>
-                <span>${rec}</span>
+              <div class="soc-playbook-item">
+                <i class="bi bi-shield-check text-cyan"></i>
+                <span class="text-white">${rec}</span>
               </div>
             `).join("")}
           </div>

@@ -55,10 +55,10 @@ function loadReportData() {
   const recList = document.getElementById("rep-recommendations-list");
   if (recList) {
     recList.innerHTML = (inc.recommendations || []).map(r => `
-      <li class="list-group-item bg-transparent text-slate-300 border-slate-800 py-1.5 px-0 d-flex align-items-start gap-2 small">
-        <i class="bi bi-shield-check text-cyan mt-0.5"></i>
-        <span>${r}</span>
-      </li>
+      <div class="soc-playbook-item mb-2">
+        <i class="bi bi-shield-check text-cyan"></i>
+        <span class="text-white">${r}</span>
+      </div>
     `).join("");
   }
 

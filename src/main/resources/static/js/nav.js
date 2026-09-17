@@ -45,9 +45,7 @@ function renderSidebar() {
   sidebarContainer.innerHTML = `
     <div class="desktop-sidebar">
       <div class="brand-header">
-        <div class="brand-icon">
-          <i class="bi bi-shield-shaded" style="font-size: 1.3rem;"></i>
-        </div>
+        <img src="images/logo.png" alt="CyberTrace Logo" class="brand-logo-img">
         <div>
           <h1 class="brand-title">CYBERTRACE</h1>
           <p class="brand-subtitle">AI Forensics SOC</p>
@@ -86,6 +84,7 @@ function renderTopNavbar() {
         </button>
 
         <div class="d-flex align-items-center gap-2">
+          <img src="images/logo.png" alt="CyberTrace Logo" class="d-lg-none brand-logo-img" style="width: 30px; height: 30px;">
           <span class="d-lg-none text-white fw-bold tracking-wide">CYBERTRACE</span>
           <span class="d-none d-lg-inline text-slate-400 small">Security Command Center <span class="text-cyan">• Active Telemetry</span></span>
         </div>
@@ -109,9 +108,7 @@ function renderTopNavbar() {
     <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="mobileOffcanvas" style="background-color: #0f172a !important; width: 280px; border-right: 1px solid var(--cyber-border);">
       <div class="offcanvas-header border-bottom" style="border-color: rgba(51, 65, 85, 0.4) !important;">
         <div class="d-flex align-items-center gap-2">
-          <div class="brand-icon" style="width: 32px; height: 32px;">
-            <i class="bi bi-shield-shaded text-cyan"></i>
-          </div>
+          <img src="images/logo.png" alt="CyberTrace Logo" class="brand-logo-img" style="width: 32px; height: 32px;">
           <div>
             <h5 class="offcanvas-title text-white fw-bold m-0" style="font-size: 1.1rem;">CYBERTRACE</h5>
             <small class="text-cyan" style="font-size: 0.65rem;">SOC MOBILE COMMAND</small>

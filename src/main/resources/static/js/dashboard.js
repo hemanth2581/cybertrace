@@ -152,10 +152,10 @@ function renderActiveIncident() {
 
   const inc = incidents[0];
   const recommendationsHtml = (inc.recommendations || []).map(r => `
-    <li class="d-flex align-items-start gap-2 text-slate-300 small mb-1.5">
-      <i class="bi bi-arrow-right-circle text-cyan mt-0.5"></i>
-      <span>${r}</span>
-    </li>
+    <div class="soc-playbook-item">
+      <i class="bi bi-shield-check text-cyan"></i>
+      <span class="text-white">${r}</span>
+    </div>
   `).join("");
 
   container.innerHTML = `
