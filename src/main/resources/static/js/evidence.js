@@ -39,6 +39,11 @@ function loadEvidenceData() {
   highlightIfSuspicious("card-transfer", nodes.some(n => n.startsWith("TRANSFER:")));
 }
 
+function setText(elementId, text) {
+  const el = document.getElementById(elementId);
+  if (el) el.textContent = text;
+}
+
 function highlightIfSuspicious(elementId, isSuspicious) {
   const el = document.getElementById(elementId);
   if (!el) return;

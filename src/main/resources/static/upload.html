@@ -71,7 +71,7 @@
         </p>
 
         <div class="row g-3">
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-sm-6 col-lg-3">
             <button id="demo-compromise-btn" class="btn text-start p-3 w-100 h-100 cyber-card border-danger-subtle d-flex flex-column justify-content-between" style="background: rgba(239, 68, 68, 0.05);">
               <div>
                 <div class="d-flex align-items-center justify-content-between mb-2">
@@ -80,14 +80,14 @@
                 </div>
                 <strong class="text-white d-block mb-1">Account Compromise</strong>
                 <p class="text-slate-400 small m-0" style="font-size: 0.78rem;">
-                  Rahul • Multiple failed logins, external IP, passwords.txt access, large exfiltration, privilege escalation.
+                  Rahul • Failed logins, external IP, passwords.txt access, exfiltration.
                 </p>
               </div>
-              <div class="text-cyan small fw-semibold mt-3">Load Compromise Dataset →</div>
+              <div class="text-cyan small fw-semibold mt-3">Load Compromise →</div>
             </button>
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-sm-6 col-lg-3">
             <button id="demo-exfiltration-btn" class="btn text-start p-3 w-100 h-100 cyber-card border-warning-subtle d-flex flex-column justify-content-between" style="background: rgba(245, 158, 11, 0.05);">
               <div>
                 <div class="d-flex align-items-center justify-content-between mb-2">
@@ -96,14 +96,30 @@
                 </div>
                 <strong class="text-white d-block mb-1">Data Exfiltration</strong>
                 <p class="text-slate-400 small m-0" style="font-size: 0.78rem;">
-                  Alex • Database SQL dump access, multi-GB outbound data transfer to external public IP.
+                  Alex • Database SQL dump access, multi-GB outbound data transfer.
                 </p>
               </div>
-              <div class="text-cyan small fw-semibold mt-3">Load Exfiltration Dataset →</div>
+              <div class="text-cyan small fw-semibold mt-3">Load Exfiltration →</div>
             </button>
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-sm-6 col-lg-3">
+            <button id="demo-insider-btn" class="btn text-start p-3 w-100 h-100 cyber-card border-warning-subtle d-flex flex-column justify-content-between" style="background: rgba(234, 88, 12, 0.05);">
+              <div>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <span class="badge bg-warning text-dark font-mono px-2 py-1">HIGH</span>
+                  <i class="bi bi-person-x text-warning"></i>
+                </div>
+                <strong class="text-white d-block mb-1">Insider Threat</strong>
+                <p class="text-slate-400 small m-0" style="font-size: 0.78rem;">
+                  David • Off-hours key theft, privilege escalation, 680MB transfer.
+                </p>
+              </div>
+              <div class="text-cyan small fw-semibold mt-3">Load Insider Threat →</div>
+            </button>
+          </div>
+
+          <div class="col-12 col-sm-6 col-lg-3">
             <button id="demo-normal-btn" class="btn text-start p-3 w-100 h-100 cyber-card border-success-subtle d-flex flex-column justify-content-between" style="background: rgba(16, 185, 129, 0.05);">
               <div>
                 <div class="d-flex align-items-center justify-content-between mb-2">
@@ -112,10 +128,10 @@
                 </div>
                 <strong class="text-white d-block mb-1">Normal Activity</strong>
                 <p class="text-slate-400 small m-0" style="font-size: 0.78rem;">
-                  Sarah • Routine enterprise operations: standard internal login, report read, routine logout.
+                  Sarah • Clean baseline: routine login, report read, normal logout.
                 </p>
               </div>
-              <div class="text-cyan small fw-semibold mt-3">Load Normal Dataset →</div>
+              <div class="text-cyan small fw-semibold mt-3">Load Normal →</div>
             </button>
           </div>
         </div>
