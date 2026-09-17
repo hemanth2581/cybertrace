@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Forensics Time Machine — CyberTrace</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- FIXED SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">⚡</div>
+                <div>
+                    <div class="sidebar-brand-title">CYBERTRACE</div>
+                    <div class="sidebar-brand-sub">Security Intelligence</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Core Operations</div>
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span>Overview</span>
+                </a>
+                <a href="events.html" class="nav-item">
+                    <span class="nav-icon">📜</span>
+                    <span>Events Explorer</span>
+                </a>
+                <a href="anomalies.html" class="nav-item">
+                    <span class="nav-icon">⚠️</span>
+                    <span>Anomalies</span>
+                </a>
+                <a href="investigation.html" class="nav-item">
+                    <span class="nav-icon">🔍</span>
+                    <span>Incidents</span>
+                </a>
+
+                <div class="nav-section-label">Forensics & AI</div>
+                <a href="timeline.html" class="nav-item active">
+                    <span class="nav-icon">⏱️</span>
+                    <span>Time Machine</span>
+                </a>
+                <a href="evidence.html" class="nav-item">
+                    <span class="nav-icon">🔗</span>
+                    <span>Evidence Graph</span>
+                </a>
+                <a href="investigator.html" class="nav-item">
+                    <span class="nav-icon">🤖</span>
+                    <span>AI Investigator</span>
+                </a>
+
+                <div class="nav-section-label">Management</div>
+                <a href="report.html" class="nav-item">
+                    <span class="nav-icon">📄</span>
+                    <span>Incident Reports</span>
+                </a>
+                <a href="upload.html" class="nav-item">
+                    <span class="nav-icon">📤</span>
+                    <span>Upload Logs</span>
+                </a>
+                <a href="how-it-works.html" class="nav-item">
+                    <span class="nav-icon">💡</span>
+                    <span>How It Works</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status-box" id="sidebar-db-status">
+                    <div class="status-row">
+                        <span style="color: var(--text-muted);">Status:</span>
+                        <span class="status-indicator">
+                            <span class="status-dot"></span>
+                            <span style="color: var(--color-normal); font-weight: 700;">ONLINE</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN VIEWPORT -->
+        <div class="main-viewport">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-title-group">
+                    <h1 class="topbar-title">⏱️ Digital Forensics Time Machine</h1>
+                    <span class="topbar-subtitle">Replay the attack chronology step-by-step with synchronized forensic telemetry</span>
+                </div>
+
+                <div class="topbar-actions">
+                    <button onclick="jumpToFirstSuspicious()" class="btn btn-danger btn-sm">🚨 Jump to First Anomaly (10:15)</button>
+                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm">↻ Refresh</button>
+                </div>
+            </header>
+
+            <!-- CONTENT BODY -->
+            <main class="content-body">
+                <section class="context-box">
+                    <div class="context-box-icon">💡</div>
+                    <div>
+                        <div class="context-box-title">Forensic Time Travel Controls</div>
+                        <div class="context-box-text">
+                            The Time Machine reconstructs the exact historical progression of the cyber incident. Drag the slider or click <b>Play</b> to observe how normal baseline operations escalated into unauthorized access, data exfiltration, and privilege persistence.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MASTER TIME MACHINE PLAYER CARD -->
+                <section class="time-machine-card">
+                    <!-- HEADLINE & COUNTER -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+                        <div id="insp-headline" style="font-size: 1.2rem; font-weight: 800; color: var(--color-cyan);">
+                            Loading Incident Chronology...
+                        </div>
+                        <span id="timeline-step-counter" class="badge badge-low" style="font-size: 0.85rem; padding: 6px 12px;">
+                            Event 1 of --
+                        </span>
+                    </div>
+
+                    <!-- SCRUBBER SLIDER -->
+                    <div class="timeline-slider-container">
+                        <input type="range" id="timeline-slider" class="timeline-slider" min="0" max="10" value="0">
+                    </div>
+
+                    <!-- PLAYBACK CONTROLS -->
+                    <div class="playback-controls">
+                        <button onclick="prevStep()" class="btn btn-secondary">⏮️ Previous Event</button>
+                        <button onclick="isPlaying ? pauseTimeline() : playTimeline()" id="btn-play" class="btn btn-primary" style="min-width: 130px;">▶️ Play</button>
+                        <button onclick="nextStep()" class="btn btn-secondary">Next Event ⏭️</button>
+                        <button onclick="jumpToFirstSuspicious()" class="btn btn-danger">🚨 First Suspicious Event</button>
+                    </div>
+
+                    <!-- EVENT TELEMETRY INSPECTOR -->
+                    <div class="event-inspector-panel">
+                        <div class="inspector-field">
+                            <span class="inspector-label">Timestamp</span>
+                            <span id="insp-timestamp" class="inspector-value code-font">--:--</span>
+                        </div>
+                        <div class="inspector-field">
+                            <span class="inspector-label">User Account</span>
+                            <span id="insp-user" class="inspector-value" style="font-weight: 700;">--</span>
+                        </div>
+                        <div class="inspector-field">
+                            <span class="inspector-label">Host Device</span>
+                            <span id="insp-device" class="inspector-value code-font">--</span>
+                        </div>
+                        <div class="inspector-field">
+                            <span class="inspector-label">Source IP Address</span>
+                            <span id="insp-ip" class="inspector-value code-font">--</span>
+                        </div>
+                        <div class="inspector-field">
+                            <span class="inspector-label">Event & Action</span>
+                            <span id="insp-event" class="inspector-value">--</span>
+                        </div>
+                        <div class="inspector-field">
+                            <span class="inspector-label">Target File</span>
+                            <span id="insp-file" class="inspector-value code-font">None</span>
+                        </div>
+                        <div class="inspector-field">
+                            <span class="inspector-label">Threat Severity</span>
+                            <span id="insp-risk" class="inspector-value">--</span>
+                        </div>
+                        <div class="inspector-field" style="grid-column: 1 / -1; margin-top: 0.5rem; padding-top: 0.75rem; border-top: 1px solid var(--border-subtle);">
+                            <span class="inspector-label">Forensic Violation Reason</span>
+                            <span id="insp-reason" class="inspector-value" style="font-size: 0.9rem; color: var(--color-critical); font-weight: 600;">--</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ATTACK SEQUENCE TRACK -->
+                <section class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">📜 Chronological Attack Sequence Track</h2>
+                            <span class="card-subtitle">Click any step node to inspect its forensic state directly</span>
+                        </div>
+                    </div>
+                    <div id="timeline-track-items">
+                        <!-- Rendered by main.js loadTimeline() -->
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadTimeline();
+        });
+    </script>
+</body>
+</html>

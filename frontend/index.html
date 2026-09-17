@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberTrace — Security Command Center</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- FIXED SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">⚡</div>
+                <div>
+                    <div class="sidebar-brand-title">CYBERTRACE</div>
+                    <div class="sidebar-brand-sub">Security Intelligence</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Core Operations</div>
+                <a href="index.html" class="nav-item active">
+                    <span class="nav-icon">📊</span>
+                    <span>Overview</span>
+                </a>
+                <a href="events.html" class="nav-item">
+                    <span class="nav-icon">📜</span>
+                    <span>Events Explorer</span>
+                </a>
+                <a href="anomalies.html" class="nav-item">
+                    <span class="nav-icon">⚠️</span>
+                    <span>Anomalies</span>
+                </a>
+                <a href="investigation.html" class="nav-item">
+                    <span class="nav-icon">🔍</span>
+                    <span>Incidents</span>
+                </a>
+
+                <div class="nav-section-label">Forensics & AI</div>
+                <a href="timeline.html" class="nav-item">
+                    <span class="nav-icon">⏱️</span>
+                    <span>Time Machine</span>
+                </a>
+                <a href="evidence.html" class="nav-item">
+                    <span class="nav-icon">🔗</span>
+                    <span>Evidence Graph</span>
+                </a>
+                <a href="investigator.html" class="nav-item">
+                    <span class="nav-icon">🤖</span>
+                    <span>AI Investigator</span>
+                </a>
+
+                <div class="nav-section-label">Management</div>
+                <a href="report.html" class="nav-item">
+                    <span class="nav-icon">📄</span>
+                    <span>Incident Reports</span>
+                </a>
+                <a href="upload.html" class="nav-item">
+                    <span class="nav-icon">📤</span>
+                    <span>Upload Logs</span>
+                </a>
+                <a href="how-it-works.html" class="nav-item">
+                    <span class="nav-icon">💡</span>
+                    <span>How It Works</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status-box" id="sidebar-db-status">
+                    <div class="status-row">
+                        <span style="color: var(--text-muted);">Status:</span>
+                        <span class="status-indicator">
+                            <span class="status-dot"></span>
+                            <span style="color: var(--color-normal); font-weight: 700;">ONLINE</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN VIEWPORT -->
+        <div class="main-viewport">
+            <!-- TOP NAVIGATION HEADER -->
+            <header class="topbar">
+                <div class="topbar-title-group">
+                    <h1 class="topbar-title">🛡️ Security Command Center</h1>
+                    <span class="topbar-subtitle">Real-time security monitoring and incident intelligence</span>
+                </div>
+
+                <div class="topbar-actions">
+                    <span class="badge badge-normal" id="topbar-system-status">
+                        <span class="status-dot"></span>
+                        <span>SYSTEM ONLINE</span>
+                    </span>
+                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm">↻ Refresh</button>
+                    <a href="upload.html" class="btn btn-primary btn-sm">📤 Upload Logs</a>
+                </div>
+            </header>
+
+            <!-- CONTENT BODY -->
+            <main class="content-body">
+                <!-- BEGINNER CONTEXT CALLOUT -->
+                <section class="context-box">
+                    <div class="context-box-icon">💡</div>
+                    <div>
+                        <div class="context-box-title">Security Operations Overview</div>
+                        <div class="context-box-text">
+                            CyberTrace aggregates raw system logs, cleans them with <b>Pandas</b>, scores security risks via <b>AI anomaly rules</b> (0–100), and correlates suspicious events into actionable investigation cases.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TOP KPI CARDS -->
+                <section class="kpi-grid">
+                    <div class="kpi-card low">
+                        <div class="kpi-header"><span class="kpi-label">Total Events</span><span class="kpi-icon">📜</span></div>
+                        <div class="kpi-value" id="stat-total-events">0</div>
+                        <div class="kpi-desc">Ingested and parsed log records</div>
+                    </div>
+                    <div class="kpi-card critical">
+                        <div class="kpi-header"><span class="kpi-label">Critical Threats</span><span class="kpi-icon">🔴</span></div>
+                        <div class="kpi-value" id="stat-critical-threats">0</div>
+                        <div class="kpi-desc">Severe risk violations (≥81/100)</div>
+                    </div>
+                    <div class="kpi-card high">
+                        <div class="kpi-header"><span class="kpi-label">Active Incidents</span><span class="kpi-icon">🔍</span></div>
+                        <div class="kpi-value" id="stat-active-incidents">0</div>
+                        <div class="kpi-desc">Correlated multi-stage attack cases</div>
+                    </div>
+                    <div class="kpi-card medium">
+                        <div class="kpi-header"><span class="kpi-label">Overall Risk</span><span class="kpi-icon">⚡</span></div>
+                        <div class="kpi-value" id="stat-overall-risk">0/100</div>
+                        <div class="kpi-desc">Average environment threat level</div>
+                    </div>
+                </section>
+
+                <!-- DEMO SCENARIO SHORTCUTS -->
+                <section class="card" style="border-left: 4px solid var(--color-cyan); margin-bottom: 1.5rem;">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">🧪 One-Click Demo Scenarios (Hackathon Test Suite)</h2>
+                            <span class="card-subtitle">Click any preset below to instantly load and analyze a realistic cyber attack</span>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button onclick="loadDemoScenario('account_compromise')" class="btn btn-primary">
+                            🚨 Master Scenario: Account Compromise (Rahul 10:01 - 10:27)
+                        </button>
+                        <button onclick="loadDemoScenario('data_exfiltration')" class="btn btn-secondary">
+                            💾 Scenario 2: Data Exfiltration & Database Dump
+                        </button>
+                        <button onclick="loadDemoScenario('normal_activity')" class="btn btn-secondary">
+                            🟢 Scenario 3: Normal Corporate Baseline
+                        </button>
+                    </div>
+                </section>
+
+                <!-- TWO COLUMN GRID: THREAT BREAKDOWN & ACTIVE INCIDENT -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <!-- Threat Severity Card -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">📈 Threat Severity Distribution</h2>
+                        </div>
+                        <div id="threat-severity-breakdown">
+                            <!-- Rendered by main.js loadDashboard() -->
+                        </div>
+                    </section>
+
+                    <!-- Active Incident Highlight Card -->
+                    <section class="card" id="active-incident-highlight-card">
+                        <!-- Injected by loadDashboard() -->
+                    </section>
+                </div>
+
+                <!-- RECENT SECURITY EVENTS TABLE -->
+                <section class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">📜 Recent Security Events</h2>
+                            <span class="card-subtitle">Latest audit logs processed by anomaly engine</span>
+                        </div>
+                        <a href="events.html" class="btn btn-secondary btn-sm">View All Events →</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>User</th>
+                                    <th>Event & Action</th>
+                                    <th>Source IP</th>
+                                    <th>Severity</th>
+                                    <th>Risk Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-events-table-body">
+                                <!-- Injected by main.js loadDashboard() -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadDashboard();
+        });
+    </script>
+</body>
+</html>

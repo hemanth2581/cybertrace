@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works — CyberTrace Architecture</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- FIXED SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">⚡</div>
+                <div>
+                    <div class="sidebar-brand-title">CYBERTRACE</div>
+                    <div class="sidebar-brand-sub">Security Intelligence</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Core Operations</div>
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span>Overview</span>
+                </a>
+                <a href="events.html" class="nav-item">
+                    <span class="nav-icon">📜</span>
+                    <span>Events Explorer</span>
+                </a>
+                <a href="anomalies.html" class="nav-item">
+                    <span class="nav-icon">⚠️</span>
+                    <span>Anomalies</span>
+                </a>
+                <a href="investigation.html" class="nav-item">
+                    <span class="nav-icon">🔍</span>
+                    <span>Incidents</span>
+                </a>
+
+                <div class="nav-section-label">Forensics & AI</div>
+                <a href="timeline.html" class="nav-item">
+                    <span class="nav-icon">⏱️</span>
+                    <span>Time Machine</span>
+                </a>
+                <a href="evidence.html" class="nav-item">
+                    <span class="nav-icon">🔗</span>
+                    <span>Evidence Graph</span>
+                </a>
+                <a href="investigator.html" class="nav-item">
+                    <span class="nav-icon">🤖</span>
+                    <span>AI Investigator</span>
+                </a>
+
+                <div class="nav-section-label">Management</div>
+                <a href="report.html" class="nav-item">
+                    <span class="nav-icon">📄</span>
+                    <span>Incident Reports</span>
+                </a>
+                <a href="upload.html" class="nav-item">
+                    <span class="nav-icon">📤</span>
+                    <span>Upload Logs</span>
+                </a>
+                <a href="how-it-works.html" class="nav-item active">
+                    <span class="nav-icon">💡</span>
+                    <span>How It Works</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status-box" id="sidebar-db-status">
+                    <div class="status-row">
+                        <span style="color: var(--text-muted);">Status:</span>
+                        <span class="status-indicator">
+                            <span class="status-dot"></span>
+                            <span style="color: var(--color-normal); font-weight: 700;">ONLINE</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN VIEWPORT -->
+        <div class="main-viewport">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-title-group">
+                    <h1 class="topbar-title">💡 How CyberTrace Works (8-Step Architecture)</h1>
+                    <span class="topbar-subtitle">Interactive pipeline breakdown explaining the full data and forensic intelligence lifecycle</span>
+                </div>
+
+                <div class="topbar-actions">
+                    <a href="timeline.html" class="btn btn-primary btn-sm">⏱️ Open Time Machine</a>
+                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm">↻ Refresh</button>
+                </div>
+            </header>
+
+            <!-- CONTENT BODY -->
+            <main class="content-body">
+                <section class="context-box">
+                    <div class="context-box-icon">💡</div>
+                    <div>
+                        <div class="context-box-title">System Pipeline Navigation</div>
+                        <div class="context-box-text">
+                            Click on any stage below to inspect how the frontend, Python backend, Pandas cleaning, AI anomaly scoring, Supabase database, and ReportLab PDF generator interact.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PIPELINE STEPS CONTAINER -->
+                <section id="pipeline-steps-container">
+
+                    <!-- STEP 1 -->
+                    <div class="pipeline-step-card active" onclick="toggleStep(this)">
+                        <span class="inspector-label" style="color: var(--color-cyan);">STAGE 01</span>
+                        <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 4px 0 6px;">📤 Upload Security Logs</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem;">Investigators upload CSV log files containing user activity, IP addresses, and file transactions.</p>
+                        <div class="step-details-drawer">
+                            <p><b>What happens?</b> The browser reads the CSV file and uses JavaScript <code>fetch()</code> to transmit it to Python.</p>
+                            <p><b>Why do we need it?</b> Digital investigations begin by gathering system and security logs from firewalls, operating systems, and authentication servers.</p>
+                            <p><b>Which Python file handles it?</b> <span class="code-font">server.py</span> & <span class="code-font">backend/events.py</span></p>
+                            <p><b>Which Supabase table is involved?</b> Ingestion stage before database write.</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2 -->
+                    <div class="pipeline-step-card" onclick="toggleStep(this)">
+                        <span class="inspector-label" style="color: var(--color-cyan);">STAGE 02</span>
+                        <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 4px 0 6px;">🧹 Clean & Preprocess Data</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem;">Python Pandas standardizes columns, removes duplicate records, and fills missing values.</p>
+                        <div class="step-details-drawer">
+                            <p><b>What happens?</b> Pandas converts the raw text into a clean Python DataFrame, strips accidental spaces, and fills missing fields with safe defaults.</p>
+                            <p><b>Why do we need it?</b> Real-world logs are often messy. Cleaning ensures our anomaly math and database queries run without crashing.</p>
+                            <p><b>Which Python file handles it?</b> <span class="code-font">ai/preprocessing.py</span></p>
+                            <p><b>Which Supabase table is involved?</b> Stored into <span class="code-font">security_events</span>.</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3 -->
+                    <div class="pipeline-step-card" onclick="toggleStep(this)">
+                        <span class="inspector-label" style="color: var(--color-cyan);">STAGE 03</span>
+                        <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 4px 0 6px;">⚠️ Find Unusual Activity & Score Risk</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem;">Rule-based detection checks for foreign IPs, brute force logins, sensitive files, and data exfiltration.</p>
+                        <div class="step-details-drawer">
+                            <p><b>What happens?</b> Every event is evaluated against cybersecurity rules (e.g. Unusual IP +20, Sensitive File +20) to compute a score from 0 to 100.</p>
+                            <p><b>Why do we need it?</b> Security analysts cannot review millions of logs manually. Risk scoring highlights the exact critical threats instantly.</p>
+                            <p><b>Which Python file handles it?</b> <span class="code-font">ai/anomaly_detection.py</span></p>
+                            <p><b>Which Supabase table is involved?</b> <span class="code-font">security_events</span> (columns: <code>risk_score</code>, <code>severity</code>, <code>reason</code>, <code>is_anomaly</code>).</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4 -->
+                    <div class="pipeline-step-card" onclick="toggleStep(this)">
+                        <span class="inspector-label" style="color: var(--color-cyan);">STAGE 04</span>
+                        <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 4px 0 6px;">🔗 Connect Related Events (Correlation)</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem;">Groups isolated events by User, Device, IP, and Time into coordinated Incident cases.</p>
+                        <div class="step-details-drawer">
+                            <p><b>What happens?</b> Related suspicious events are linked together into an incident record (e.g. <code>INC-001</code>) tracking the multi-stage attack lifecycle.</p>
+                            <p><b>Why do we need it?</b> A cyber attack consists of multiple steps (access ➔ discovery ➔ exfiltration ➔ persistence). Correlation connects the dots.</p>
+                            <p><b>Which Python file handles it?</b> <span class="code-font">backend/correlation.py</span></p>
+                            <p><b>Which Supabase table is involved?</b> <span class="code-font">incidents</span>.</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5 -->
+                    <div class="pipeline-step-card" onclick="toggleStep(this)">
+                        <span class="inspector-label" style="color: var(--color-cyan);">STAGE 05</span>
+                        <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 4px 0 6px;">⏱️ Create Forensic Incident Timeline</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem;">Reconstructs the chronological event sequence for the Digital Forensics Time Machine.</p>
+                        <div class="step-details-drawer">
+                            <p><b>What happens?</b> Events are sorted by time with state markers, allowing investigators to step forward, pause, and jump directly to the first anomaly.</p>
+                            <p><b>Why do we need it?</b> Understanding WHEN each event happened is the foundation of digital forensics and incident response.</p>
+                            <p><b>Which Python file handles it?</b> <span class="code-font">backend/timeline.py</span></p>
+                            <p><b>Which Supabase table is involved?</b> <span class="code-font">security_events</span> & <span class="code-font">incidents</span>.</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 6 -->
+                    <div class="pipeline-step-card" onclick="toggleStep(this)">
+                        <span class="inspector-label" style="color: var(--color-cyan);">STAGE 06</span>
+                        <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 4px 0 6px;">🌐 Show Evidence Relationships</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem;">Generates relationship links (User ➔ Device ➔ IP ➔ File ➔ Payload Transfer).</p>
+                        <div class="step-details-drawer">
+                            <p><b>What happens?</b> Builds a graph of forensic assets showing first-seen and last-seen timestamps and linked risk scores.</p>
+                            <p><b>Why do we need it?</b> Demonstrates legal chain-of-custody and clear asset relationships for cybersecurity investigations.</p>
+                            <p><b>Which Python file handles it?</b> <span class="code-font">backend/evidence.py</span></p>
+                            <p><b>Which Supabase table is involved?</b> <span class="code-font">evidence</span>.</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 7 -->
+                    <div class="pipeline-step-card" onclick="toggleStep(this)">
+                        <span class="inspector-label" style="color: var(--color-cyan);">STAGE 07</span>
+                        <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 4px 0 6px;">🤖 AI Forensic Investigation</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem;">Answers natural language questions strictly grounded in actual database log records.</p>
+                        <div class="step-details-drawer">
+                            <p><b>What happens?</b> The investigator asks "What happened?" or "What was the first suspicious event?" and Python answers using real database facts.</p>
+                            <p><b>Why do we need it?</b> Accelerates decision-making by summarizing complex forensic evidence in plain English without hallucinating.</p>
+                            <p><b>Which Python file handles it?</b> <span class="code-font">backend/investigator.py</span></p>
+                            <p><b>Which Supabase table is involved?</b> Queries all tables.</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 8 -->
+                    <div class="pipeline-step-card" onclick="toggleStep(this)">
+                        <span class="inspector-label" style="color: var(--color-cyan);">STAGE 08</span>
+                        <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 4px 0 6px;">📄 Generate Official Incident Report</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem;">Synthesizes findings into a professional audit report and generates a downloadable PDF.</p>
+                        <div class="step-details-drawer">
+                            <p><b>What happens?</b> CyberTrace formats an executive dossier and calls <b>Python ReportLab</b> to produce a publication-quality PDF.</p>
+                            <p><b>Why do we need it?</b> Critical for security leadership, legal compliance, and post-incident remediation audits.</p>
+                            <p><b>Which Python file handles it?</b> <span class="code-font">backend/report.py</span></p>
+                            <p><b>Which Supabase table is involved?</b> <span class="code-font">investigation_reports</span>.</p>
+                        </div>
+                    </div>
+
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        function toggleStep(element) {
+            document.querySelectorAll(".pipeline-step-card").forEach(c => c.classList.remove("active"));
+            element.classList.add("active");
+        }
+    </script>
+</body>
+</html>

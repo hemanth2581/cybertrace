@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Event Explorer — CyberTrace</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- FIXED SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">⚡</div>
+                <div>
+                    <div class="sidebar-brand-title">CYBERTRACE</div>
+                    <div class="sidebar-brand-sub">Security Intelligence</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Core Operations</div>
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span>Overview</span>
+                </a>
+                <a href="events.html" class="nav-item active">
+                    <span class="nav-icon">📜</span>
+                    <span>Events Explorer</span>
+                </a>
+                <a href="anomalies.html" class="nav-item">
+                    <span class="nav-icon">⚠️</span>
+                    <span>Anomalies</span>
+                </a>
+                <a href="investigation.html" class="nav-item">
+                    <span class="nav-icon">🔍</span>
+                    <span>Incidents</span>
+                </a>
+
+                <div class="nav-section-label">Forensics & AI</div>
+                <a href="timeline.html" class="nav-item">
+                    <span class="nav-icon">⏱️</span>
+                    <span>Time Machine</span>
+                </a>
+                <a href="evidence.html" class="nav-item">
+                    <span class="nav-icon">🔗</span>
+                    <span>Evidence Graph</span>
+                </a>
+                <a href="investigator.html" class="nav-item">
+                    <span class="nav-icon">🤖</span>
+                    <span>AI Investigator</span>
+                </a>
+
+                <div class="nav-section-label">Management</div>
+                <a href="report.html" class="nav-item">
+                    <span class="nav-icon">📄</span>
+                    <span>Incident Reports</span>
+                </a>
+                <a href="upload.html" class="nav-item">
+                    <span class="nav-icon">📤</span>
+                    <span>Upload Logs</span>
+                </a>
+                <a href="how-it-works.html" class="nav-item">
+                    <span class="nav-icon">💡</span>
+                    <span>How It Works</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status-box" id="sidebar-db-status">
+                    <div class="status-row">
+                        <span style="color: var(--text-muted);">Status:</span>
+                        <span class="status-indicator">
+                            <span class="status-dot"></span>
+                            <span style="color: var(--color-normal); font-weight: 700;">ONLINE</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN VIEWPORT -->
+        <div class="main-viewport">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-title-group">
+                    <h1 class="topbar-title">📜 Security Event Explorer</h1>
+                    <span class="topbar-subtitle">Search, filter, and audit full security event records</span>
+                </div>
+
+                <div class="topbar-actions">
+                    <span class="badge badge-normal" id="events-count-badge">0 Records</span>
+                    <button onclick="refreshCurrentView()" class="btn btn-secondary btn-sm">↻ Refresh</button>
+                    <a href="upload.html" class="btn btn-primary btn-sm">📤 Ingest Logs</a>
+                </div>
+            </header>
+
+            <!-- CONTENT BODY -->
+            <main class="content-body">
+                <section class="context-box">
+                    <div class="context-box-icon">💡</div>
+                    <div>
+                        <div class="context-box-title">Audit Log Explorer Guide</div>
+                        <div class="context-box-text">
+                            Every row in this table represents an authenticated action, file operation, or network transaction parsed from uploaded logs. Use real-time search and severity filters to pinpoint specific assets.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SEARCH & MULTI-FILTER PANEL -->
+                <section class="card" style="padding: 1rem 1.25rem; margin-bottom: 1.25rem;">
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                        <input type="text" id="event-search-input" class="form-control" placeholder="🔍 Search by user, IP, device, action, or filename..." style="flex: 2; min-width: 260px;">
+                        <select id="severity-filter" class="form-control" style="flex: 1; min-width: 180px; max-width: 220px;">
+                            <option value="">All Severities</option>
+                            <option value="CRITICAL">🔴 Critical Only</option>
+                            <option value="HIGH">🟠 High Only</option>
+                            <option value="MEDIUM">🟡 Medium Only</option>
+                            <option value="LOW">🔵 Low / Normal Only</option>
+                        </select>
+                    </div>
+                </section>
+
+                <!-- EVENTS TABLE CARD -->
+                <section class="card">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>User Account</th>
+                                    <th>Event & Action</th>
+                                    <th>Source IP</th>
+                                    <th>Host Device</th>
+                                    <th>Target File</th>
+                                    <th>Risk Score</th>
+                                    <th>Severity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-events-table-body">
+                                <!-- Injected by main.js loadEvents() -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadEvents();
+        });
+    </script>
+</body>
+</html>
