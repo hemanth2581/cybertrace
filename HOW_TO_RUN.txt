@@ -1,0 +1,35 @@
+============================================================
+CYBERTRACE — AI DIGITAL FORENSICS & INCIDENT RESPONSE PLATFORM
+RUSHITHA CODEATHON PROJECT
+============================================================
+
+HOW TO RUN:
+
+METHOD 1 (Easiest — 1-Click Launch):
+1. Extract this entire zip folder.
+2. Double-click "RUN.bat".
+3. Your web browser will automatically open at:
+   http://localhost:8080
+
+------------------------------------------------------------
+METHOD 2 (Command Line):
+1. Open terminal / Command Prompt in this folder.
+2. Run:
+   java -jar target/cybertrace-1.0.0.jar
+   (or: .\mvnw.cmd spring-boot:run)
+3. Open http://localhost:8080 in your browser.
+
+------------------------------------------------------------
+SYSTEM REQUIREMENTS:
+- Java 17 or Java 21 installed on your system.
+- Any modern web browser (Chrome, Edge, Firefox, Brave, Safari).
+- Zero database setup required (pure browser localStorage persistence).
+
+------------------------------------------------------------
+DEMO SCENARIOS INCLUDED (in /demo folder & in Upload page):
+1. Account Compromise (Shiva)
+2. Data Exfiltration (Alex)
+3. Insider Threat (David)
+4. Normal Baseline Activity (Sarah)
+
+============================================================
