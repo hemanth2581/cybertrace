@@ -68,7 +68,7 @@ CyberTrace is a modern, lightweight digital forensics and incident response (DFI
 4. Spring Boot parses the CSV, computes risk scores, detects anomalies, correlates `INC-001`, and returns the results to browser storage.
 5. **View Dashboard:** Inspect Total Events, Suspicious Anomalies, Critical Threats, Active Incident card, and Severity Distribution bar.
 6. **Navigate to Forensic Time Machine (`timeline.html`):** Click **Play** to watch the sequential attack progression from initial infiltration to privilege escalation.
-7. **Navigate to Evidence Graph (`evidence.html`):** Inspect the connected entity chain (`Rahul ➔ DEV01 ➔ 185.23.45.10 ➔ passwords.txt ➔ 850 MB`).
+7. **Navigate to Evidence Graph (`evidence.html`):** Inspect the connected entity chain (`Shiva ➔ DEV01 ➔ 185.23.45.10 ➔ passwords.txt ➔ 850 MB`).
 8. **Open AI Investigator (`investigator.html`):** Ask questions like:
    - *"What happened?"*
    - *"What was the first suspicious event?"*
